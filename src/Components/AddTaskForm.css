@@ -1,0 +1,25 @@
+.form-body {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.input {
+    border: 2px solid red;
+    border-radius: 4px;
+    width: 300px;
+    height: 30px;
+    padding: 5px;
+}
+
+.btn {
+    transition-duration: 0.4s;
+    padding: 12px 30px;
+    background-color: white;
+    margin-left: 10px;
+}
+
+.btn:hover {
+    background-color: red;
+    color: white;
+}
