@@ -6,7 +6,7 @@ const AddTaskForm = () => {
         <div className='form-body'>
             <form>
                 <input className='input' type='text' placeholder='Add new task' />
-                <button className='btn' type='submit'>Add</button>
+                <button className='btn' type='button'>Add</button>
             </form>
         </div>
     );
