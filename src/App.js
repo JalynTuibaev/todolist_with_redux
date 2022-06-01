@@ -14,8 +14,14 @@ const App = () => {
 
     const addTask = (event) => {
         event.preventDefault();
-        const newTask = {text: event.target[0].value, id: nanoid()}
-        setTodoList([...todoList, newTask]);
+        if (event.target[0].value.length > 0) {
+            const newTask = {text: event.target[0].value, id: nanoid()}
+            setTodoList([...todoList, newTask]);
+        }
+    };
+
+    const deleteTask = id => {
+        setTodoList(todoList.filter(task => task.id !== id));
     };
 
     const tasks = todoList.map(task => {
@@ -23,6 +29,7 @@ const App = () => {
             <Task
                 key={task.id}
                 txt={task.text}
+                onDelete={() => deleteTask(task.id)}
             />
         );
     });
