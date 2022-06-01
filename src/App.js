@@ -12,6 +12,12 @@ const App = () => {
         {text: 'Cleaning', id: nanoid()}
     ]);
 
+    const addTask = (event) => {
+        event.preventDefault();
+        const newTask = {text: event.target[0].value, id: nanoid()}
+        setTodoList([...todoList, newTask]);
+    };
+
     const tasks = todoList.map(task => {
         return (
             <Task
@@ -24,7 +30,7 @@ const App = () => {
 
     return (
         <div className='container'>
-            <AddTaskForm />
+            <AddTaskForm onAddTask={addTask} />
             {tasks}
         </div>
     );
