@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import AddTaskForm from "./Components/AddTaskForm";
-import Task from "./Components/Task";
+import AddTaskForm from "./Components/AddTaskForm/AddTaskForm";
+import Task from "./Components/Task/Task";
 import Spinner from "./Components/UI/Spinner/Spinner";
 import {addTodos, deleteTodos, fetchTodos} from "./store/actions";
 import './App.css';
