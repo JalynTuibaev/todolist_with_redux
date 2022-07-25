@@ -49,7 +49,6 @@ export const addTodos = (text) => {
             }
           };
 
-          console.log(todo);
           dispatch(addTodo(todo));
       } catch (e) {
           console.error(e);
