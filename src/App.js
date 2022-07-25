@@ -1,38 +1,45 @@
-import React, {useState} from 'react';
-import {nanoid} from "nanoid";
-import './App.css';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import AddTaskForm from "./Components/AddTaskForm";
 import Task from "./Components/Task";
+import Spinner from "./Components/UI/Spinner/Spinner";
+import {addTodos, deleteTodos, fetchTodos} from "./store/actions";
+import './App.css';
 
 const App = () => {
-    const [todoList, setTodoList] = useState([
-        {text: 'Do homework', id: nanoid()},
-        {text: 'Play football', id: nanoid()},
-        {text: 'Programming', id: nanoid()},
-        {text: 'Cleaning', id: nanoid()}
-    ]);
+    const todos = useSelector(state => state.todos);
+    const loading = useSelector(state => state.loading);
+    const dispatch = useDispatch();
 
-    const addTask = (event) => {
-        event.preventDefault();
-        if (event.target[0].value.length > 0) {
-            const newTask = {text: event.target[0].value, id: nanoid()}
-            setTodoList([...todoList, newTask]);
+    const addTask = async e => {
+        e.preventDefault();
+        if (e.target[0].value.length > 0) {
+            await dispatch(addTodos(e.target[0].value));
+            await dispatch(fetchTodos());
+            e.target[0].value = '';
         }
     };
 
-    const deleteTask = id => {
-        setTodoList(todoList.filter(task => task.id !== id));
+    const deleteTask = async id => {
+        await dispatch(deleteTodos(id));
+        await dispatch(fetchTodos());
     };
 
-    const tasks = todoList.map(task => {
-        return (
-            <Task
-                key={task.id}
-                txt={task.text}
-                onDelete={() => deleteTask(task.id)}
-            />
-        );
-    });
+    useEffect(() => {
+        dispatch(fetchTodos());
+    }, [dispatch]);
+
+    let tasks = todos && Object.keys(todos).map(task => (
+        <Task
+            key={task}
+            txt={todos[task].text}
+            onDelete={() => deleteTask(task)}
+        />
+    ));
+
+    if (loading) {
+        tasks = <Spinner/>;
+    }
 
 
     return (
